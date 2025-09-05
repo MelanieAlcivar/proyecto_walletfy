@@ -9,12 +9,20 @@ export const EventSchema = z.object({
   nombre: z.string().min(1, 'El nombre es obligatorio').max(20, 'El nombre no puede tener más de 20 caracteres'),
   descripcion: z.string().max(100, 'La descripción no puede tener más de 100 caracteres').optional(),
   cantidad: z.number().positive('La cantidad debe ser un número positivo'),
-  fecha: z.string().refine((date) => moment(date).isValid(), 'Fecha invalida'),
+  fecha: z.date(),
   tipo: EventTypeSchema,
   adjunto: z.string().optional(), // Base64 encoded image
 });
 
-export type Event = z.infer<typeof EventSchema>;
+export type Event = {
+  id: string;
+  nombre: string;
+  descripcion?: string;
+  cantidad: number;
+  fecha: Date;
+  tipo: EventType;
+  adjunto?: string;
+};
 
 export interface MonthGroup {
   month: string;

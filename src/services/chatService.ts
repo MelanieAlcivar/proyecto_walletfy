@@ -1,15 +1,11 @@
-import OpenAI from 'openai';
 import { ChatMessage, LLMConfig, WalletfyContext } from '../types/chat';
 import { v4 as uuidv4 } from 'uuid';
 
 class ChatService {
-  private openai: OpenAI | null = null;
   private isInitialized = false;
 
   async initialize(): Promise<void> {
     try {
-      // En un entorno real, la API key debería venir de variables de entorno
-      // Para demo, usaremos una simulación
       await new Promise(resolve => setTimeout(resolve, 2000)); // Simular carga
       this.isInitialized = true;
     } catch (error) {
