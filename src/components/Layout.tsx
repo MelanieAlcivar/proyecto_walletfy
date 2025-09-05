@@ -1,12 +1,15 @@
 import React from 'react';
+import { MessageCircle, Wallet } from 'lucide-react';
 import { useAppSelector } from '../hooks/redux';
 import ThemeToggle from './ThemeToggle';
 
 interface LayoutProps {
   children: React.ReactNode;
+  currentView?: 'balance' | 'form' | 'chat';
+  onViewChange?: (view: 'balance' | 'form' | 'chat') => void;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ({ children, currentView = 'balance', onViewChange }) => {
   const theme = useAppSelector(state => state.theme.theme);
 
   React.useEffect(() => {
@@ -27,6 +30,34 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 Walletfy
               </h1>
             </div>
+            
+            {onViewChange && (
+              <nav className="flex items-center gap-2">
+                <button
+                  onClick={() => onViewChange('balance')}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    currentView === 'balance'
+                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                >
+                  <Wallet className="w-4 h-4" />
+                  Balance
+                </button>
+                <button
+                  onClick={() => onViewChange('chat')}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    currentView === 'chat'
+                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
+                      : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                  }`}
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Chat
+                </button>
+              </nav>
+            )}
+            
             <ThemeToggle />
           </div>
         </div>

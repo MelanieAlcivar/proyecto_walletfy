@@ -7,8 +7,9 @@ import { Event } from './types/event';
 import Layout from './components/Layout';
 import BalanceFlow from './pages/BalanceFlow';
 import EventFormPage from './pages/EventFormPage';
+import ChatPage from './pages/ChatPage';
 
-type AppView = 'balance' | 'form';
+type AppView = 'balance' | 'form' | 'chat';
 
 const AppContent: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -33,12 +34,14 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <Layout currentView={currentView} onViewChange={setCurrentView}>
       {currentView === 'balance' ? (
         <BalanceFlow
           onCreateEvent={handleCreateEvent}
           onEditEvent={handleEditEvent}
         />
+      ) : currentView === 'chat' ? (
+        <ChatPage />
       ) : (
         <EventFormPage onSuccess={handleFormSuccess} />
       )}
